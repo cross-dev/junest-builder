@@ -28,7 +28,10 @@ cd ${JUNEST_BUILDER}/tmp/yaourt
 curl -L -J -O -k "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=yaourt"
 makepkg --noconfirm -sfc
 sudo pacman --noconfirm -U yaourt*.pkg.tar.xz
-yaourt -S --noconfirm droxi
+yaourt -S --noconfirm python-guzzle-sphinx-theme
+yaourt -S --noconfirm python-bcdoc
+yaourt -S --noconfirm python-botocore
+yaourt -S --noconfirm aws-cli
 
 # Building JuNest image
 mkdir -p ${JUNEST_BUILDER}/junest
@@ -36,21 +39,9 @@ cd ${JUNEST_BUILDER}
 git clone https://github.com/cross-dev/junest ${JUNEST_BUILDER}/junest
 JUNEST_TEMPDIR=${JUNEST_BUILDER}/tmp ${JUNEST_BUILDER}/junest/bin/junest -b
 
-# Upload image
 for img in $(ls junest-*.tar.gz);
 do
-    droxi put -f -O /Public/junest ${img}
+    aws s3 cp ${img} s3://crossdev/junest-image/ --acl public-read
 done
 
-DATE=$(date +'%Y-%m-%d-%H-%M-%S')
-
-for img in $(ls junest-*.tar.gz);
-do
-    mv ${img} "${img}.${DATE}"
-    droxi put -E -f -O /Public/junest "${img}.${DATE}"
-done
-
-# Cleanup
-ARCH=x86_64
-droxi ls /Public/junest/junest-${ARCH}.tar.gz.* | sed 's/ .*$//' | head -n -3 | xargs -I {} droxi rm "{}"
 rm -rf ${JUNEST_BUILDER}

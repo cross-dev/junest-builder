@@ -10,6 +10,9 @@ mkdir -p ${JUNEST_BUILDER}/tmp
 mkdir -p ${JUNEST_BUILDER}/junest
 sudo rm -rf ${JUNEST_BUILDER}/*
 
+build_aur_package() {
+    local package=$1
+}
 
 # ArchLinux System initialization
 sudo pacman -Syyu --noconfirm
@@ -30,7 +33,7 @@ yaourt -S --noconfirm droxi
 # Building JuNest image
 mkdir -p ${JUNEST_BUILDER}/junest
 cd ${JUNEST_BUILDER}
-git clone https://github.com/fsquillace/junest ${JUNEST_BUILDER}/junest
+git clone https://github.com/cross-dev/junest ${JUNEST_BUILDER}/junest
 JUNEST_TEMPDIR=${JUNEST_BUILDER}/tmp ${JUNEST_BUILDER}/junest/bin/junest -b
 
 # Upload image

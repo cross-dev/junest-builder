@@ -41,7 +41,7 @@ JUNEST_TEMPDIR=${JUNEST_BUILDER}/tmp ${JUNEST_BUILDER}/junest/bin/junest -b kcon
 
 for img in $(ls junest-*.tar.gz);
 do
-    aws s3 cp ${img} s3://crossdev/junest-image/ --acl public-read
+    aws s3 cp ${img} s3://crossdev/junest/ --acl public-read
 done
 
 rm -rf ${JUNEST_BUILDER}

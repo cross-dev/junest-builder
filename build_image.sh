@@ -37,7 +37,7 @@ yaourt -S --noconfirm aws-cli
 mkdir -p ${JUNEST_BUILDER}/junest
 cd ${JUNEST_BUILDER}
 git clone https://github.com/cross-dev/junest ${JUNEST_BUILDER}/junest
-JUNEST_TEMPDIR=${JUNEST_BUILDER}/tmp ${JUNEST_BUILDER}/junest/bin/junest -b kconfig-frontends
+JUNEST_TEMPDIR=${JUNEST_BUILDER}/tmp ${JUNEST_BUILDER}/junest/bin/junest -b kconfig-frontends make
 
 for img in $(ls junest-*.tar.gz);
 do
